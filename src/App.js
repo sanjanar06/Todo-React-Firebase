@@ -1,4 +1,6 @@
+import { collection, onSnapshot, query } from 'firebase/firestore';
 import React, {useState,useEffect}from 'react';
+import {db} from "./firebase"
 import './App.css';
 //Importing Components
 import Form from './components/Form';
@@ -14,13 +16,23 @@ function App() {
 
   //EFFECTS
   useEffect(()=>{
-    console.log("hi");
-    getLocalTodos();
+    // console.log("hi");
+    // getLocalTodos();
+    const q= query(collection(db,"todos"));
+    const unsub=onSnapshot(q, (querySnapshot)=>{
+      let todosArray=[];
+      querySnapshot.forEach((doc)=>{
+        // console.log("DB doc:",doc.data);
+        todosArray.push({text:doc.data().task,completed:doc.data().completed,id:doc.id})
+      })
+      setTodos(todosArray);
+      console.log(todosArray);
+    })
   }, []);
 
   useEffect(()=>{
     filterHandler();
-    saveLocalTodos();
+    // saveLocalTodos();
   },[todos,status]);
 
   function filterHandler(){
@@ -39,10 +51,11 @@ function App() {
 
   function saveLocalTodos(){
       localStorage.setItem("todos",JSON.stringify(todos));
+        // console.log("todo text:",todo.text);
   }
 
   function getLocalTodos(){
-    console.log("The localstorage:",localStorage.getItem("todos"));
+    // console.log("The localstorage:",localStorage.getItem("todos"));
     if(localStorage.getItem("todos") === null)
     {
       localStorage.setItem("todos",JSON.stringify([]));
@@ -54,6 +67,7 @@ function App() {
       setTodos(todoLocal);
     } 
   }
+
   return (
     <div className="App">
       <header>

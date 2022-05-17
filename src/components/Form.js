@@ -1,4 +1,6 @@
 import React from "react";
+import {db} from "../firebase";
+import {collection,addDoc} from "firebase/firestore";
 
 function Form({inputText,todos,setTodos,setInputText,setStatus}){
     function inputTextHandler(e){
@@ -7,7 +9,7 @@ function Form({inputText,todos,setTodos,setInputText,setStatus}){
         setInputText(e.target.value);
     }
 
-    function submitTodoHandler(e){
+    async function submitTodoHandler(e){
         e.preventDefault();
         // console.log(e.target);
         setTodos([
@@ -17,6 +19,12 @@ function Form({inputText,todos,setTodos,setInputText,setStatus}){
                 id:Math.random()*1000
             }
         ])
+
+        const docRef = await addDoc(collection(db, "todos"), {
+            task:inputText,
+            completed:false
+          });
+          console.log("Document written with ID: ", docRef.id);
         //Clear the input field
         setInputText("");
     }

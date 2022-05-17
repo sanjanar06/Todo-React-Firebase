@@ -49,24 +49,24 @@ function App() {
     }
   }
 
-  function saveLocalTodos(){
-      localStorage.setItem("todos",JSON.stringify(todos));
-        // console.log("todo text:",todo.text);
-  }
+  // function saveLocalTodos(){
+  //     localStorage.setItem("todos",JSON.stringify(todos));
+  //       // console.log("todo text:",todo.text);
+  // }
 
-  function getLocalTodos(){
-    // console.log("The localstorage:",localStorage.getItem("todos"));
-    if(localStorage.getItem("todos") === null)
-    {
-      localStorage.setItem("todos",JSON.stringify([]));
-    }
-    else
-    {
-      let todoLocal=JSON.parse(localStorage.getItem("todos"));
-      // console.log(todoLocal);
-      setTodos(todoLocal);
-    } 
-  }
+  // function getLocalTodos(){
+  //   // console.log("The localstorage:",localStorage.getItem("todos"));
+  //   if(localStorage.getItem("todos") === null)
+  //   {
+  //     localStorage.setItem("todos",JSON.stringify([]));
+  //   }
+  //   else
+  //   {
+  //     let todoLocal=JSON.parse(localStorage.getItem("todos"));
+  //     // console.log(todoLocal);
+  //     setTodos(todoLocal);
+  //   } 
+  // }
 
   return (
     <div className="App">
